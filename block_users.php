@@ -2,7 +2,7 @@
 /* 
 * Plugin Name:       Block any user 
 * Plugin URI:        
-* Description:       This plugin allows admin to block users from admin page.  
+* Description:       This plugin allows the admin to block users from the admin page.  
 * Version:  1.0.0
 * Requires at least: 5.2
 * Requires PHP: 7.2
@@ -25,13 +25,9 @@ function rs_add_user_role() {
 add_filter('query_vars', function ($query_vars) {
     $query_vars[] = 'blocked';
 
-    // echo '<pre>';
-    // print_r($query_vars);
-    // echo '</pre>';
-
     return $query_vars;
 });
-// template_redirect action hook runs before showing evbery page , template.  
+// template_redirect action hook runs before showing every page, template.  
 add_action('template_redirect', function () {
     $is_blocked = intval(get_query_var('blocked'));
     if ($is_blocked) {
@@ -59,7 +55,7 @@ add_action('template_redirect', function () {
 });
 
 
-// Redirect uer to the home page when try to login 
+// Redirect us to the home page when trying to login 
 add_action('init', function () {
     if (is_admin() && current_user_can('blocked')) {
         wp_redirect(get_home_url() . '/blocked');
